@@ -1,33 +1,24 @@
-<html>
 
-	<head>
+<?php
+	include('includes/header.html');
+?>
 
-		<link rel="stylesheet" href="assignment5.css" />
+<div class="jumbotron">
+	<div class="container">
+		<h1>Hello, world!</h1>
+		<p>Contents ...</p>
+		<p>
+			<a class="btn btn-primary btn-lg">Learn more</a>
+		</p>
+	</div>
+</div>
+<div class="container">
+	
+</div>
 
-		<?php
-
-			require("vendorTableData.php");
-
-		?>
-
-	</head>
-
-	<body>
-
-		<table>
-
-			<?php
-
-				CreateVendorTableHeader();
-				FillVendorTable();
-
-			?>
-
-		</table>
-
-	</body>
-
-</html>
+<?php
+	include('includes/footer.html');	
+?>
 
 
 
