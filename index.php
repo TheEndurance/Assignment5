@@ -63,7 +63,7 @@
 				<ul>
 					<?php
 						foreach($errors as $error){
-							echo '<li class="">'.$error.'</li>';
+							echo '<li class="error">'.$error.'</li>';
 						}
 					?>
 				</ul>
