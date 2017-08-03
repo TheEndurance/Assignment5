@@ -1,7 +1,13 @@
 
 <?php
+	session_start();
+
 	include('includes/header.html');
 	require('connection.php');
+	require('requires/post-validation.php');
+
+	//error array
+	$errors = array();
 
 	//Database Connection
 	$connection = ConnectToDatabase();
@@ -22,7 +28,17 @@
 		}
 		return $output;
 	}
-	
+
+	//When the form is submitted
+	if ($_SERVER['REQUEST_METHOD']=='POST'){
+        $_SESSION['VendorNo'] = ValidatePost("VendorNo","Vendor is a required field.",$errors);
+        $_SESSION['Description'] = ValidatePost("Description","Part description is a required field.",$errors);
+        $_SESSION['OnHand'] = ValidatePost("OnHand","Parts on hand is a required field.",$errors);
+        $_SESSION['OnOrder'] = ValidatePost("OnOrder","Part on order is a required field.",$errors);
+        $_SESSION['Cost'] = ValidatePost("Cost","Cost is a required field.",$errors);
+        $_SESSION['ListPrice'] = ValidatePost("ListPrice","List price is a required field.",$errors);
+
+    } // END IF POST
 ?>
 
 <div class="jumbotron">
@@ -35,16 +51,33 @@
 	</div>
 </div>
 <div class="container">
-	
 	<div class="well">
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" role="form">
+		<?php
+		if(count($errors)>0){
+		?>
+			<div class="errors">
+				<div class="alert alert-dismissible alert-danger">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+				</div>
+				<ul>
+					<?php
+						foreach($errors as $error){
+							echo '<li class="">'.$error.'</li>';
+						}
+					?>
+				</ul>
+			</div>
+		<?php
+		}
+		?>
+		<form action="index.php" method="POST" role="form">
 			<legend><h2>Insert record into the Parts table</h2></legend>
 			
 			<div class="form-group row">
 				<label class="col-md-2" for="VendorNo">Vendor</label>
 				<div class="col-md-10">
 					<select name="VendorNo" id="VendorNo" class="form-control" required="required">
-						<option value="">Select a vendor</option>
 						<?php
 							echo DropdownListFor($vendorsQuery,"VendorNo","VendorName");	
 						?>
@@ -86,7 +119,7 @@
 					<input type="text" class="form-control" id="ListPrice" name="ListPrice">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
 </div>
