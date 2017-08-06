@@ -9,6 +9,8 @@
 	//error array
 	$errors = array();
 
+
+
 	//Database Connection
 	$connection = ConnectToDatabase();
 
@@ -16,28 +18,35 @@
 	$vendorsQuery = $connection->prepare("SELECT VendorNo,VendorName from Vendors");
 	$vendorsQuery -> execute();
 
+	
 	/*
 	* Creates a <select> dropdown list, taking a SELECT query ($theQuery) as the first parameter,
 	* the <option> value as $valueID, the <option> description as $valueDescription
-	* Returns a concatenated output of all of the options
+	* echoes a concatenated output of all of the options
 	*/
 	function DropdownListFor($theQuery,$valueID,$valueDescription){
 		$output = "";
 		while($row = $theQuery ->fetch()){
 			$output .='<option value="' . $row[$valueID] . '">' . $row[$valueDescription] . '</option>';
 		}
-		return $output;
+		echo $output;
 	}
 
+	function ValidationSummaryFor($postName){
+		global $errors;
+		if (!empty($errors[$postName])){
+			echo '<p class="error">' . $errors[$postName] . '</p>';
+		}
+	}
+	
 	//When the form is submitted
 	if ($_SERVER['REQUEST_METHOD']=='POST'){
-        $_SESSION['VendorNo'] = ValidatePost("VendorNo","Vendor is a required field.",$errors);
-        $_SESSION['Description'] = ValidatePost("Description","Part description is a required field.",$errors);
-        $_SESSION['OnHand'] = ValidatePost("OnHand","Parts on hand is a required field.",$errors);
-        $_SESSION['OnOrder'] = ValidatePost("OnOrder","Part on order is a required field.",$errors);
-        $_SESSION['Cost'] = ValidatePost("Cost","Cost is a required field.",$errors);
-        $_SESSION['ListPrice'] = ValidatePost("ListPrice","List price is a required field.",$errors);
-
+        $_SESSION['VendorNo'] = ValidatePost("VendorNo","Vendor",$partDataTypes,false,"A vendor must be selected.");
+        $_SESSION['Description'] = ValidatePost("Description","Part description",$partDataTypes);
+        $_SESSION['OnHand'] = ValidatePost("OnHand","Parts on hand",$partDataTypes);
+        $_SESSION['OnOrder'] = ValidatePost("OnOrder","Parts on order",$partDataTypes);
+        $_SESSION['Cost'] = ValidatePost("Cost","Cost",$partDataTypes);
+        $_SESSION['ListPrice'] = ValidatePost("ListPrice","List price",$partDataTypes);
     } // END IF POST
 ?>
 
@@ -78,17 +87,25 @@
 				<label class="col-md-2" for="VendorNo">Vendor</label>
 				<div class="col-md-10">
 					<select name="VendorNo" id="VendorNo" class="form-control" required="required">
+						<option value="null">Select a vendor</option>
 						<?php
-							echo DropdownListFor($vendorsQuery,"VendorNo","VendorName");	
+							DropdownListFor($vendorsQuery,"VendorNo","VendorName");	
 						?>
 					</select>
+					<?php
+					ValidationSummaryFor("VendorNo");
+					?>
 				</div>
+				
 			</div>
 
 			<div class="form-group row">
 				<label class="col-md-2" for="Description">Part Description</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" id="Description" name="Description">
+					<?php
+					ValidationSummaryFor("Description");
+					?>
 				</div>
 			</div>
 
@@ -96,6 +113,9 @@
 				<label class="col-md-2" for="">Parts on hand</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" id="OnHand" name="OnHand" placeholder="Enter positive integers only">
+					<?php
+					ValidationSummaryFor("OnHand");
+					?>
 				</div>
 			</div>
 
@@ -103,6 +123,9 @@
 				<label class="col-md-2" for="">Parts on order</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" id="OnOrder" name="OnOrder" placeholder="Enter positive integers only">
+					<?php
+					ValidationSummaryFor("OnOrder");
+					?>
 				</div>
 			</div>
 
@@ -110,6 +133,9 @@
 				<label class="col-md-2" for="">Cost</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" id="Cost" name="Cost">
+					<?php
+					ValidationSummaryFor("Cost");
+					?>
 				</div>
 			</div>
 
@@ -117,6 +143,9 @@
 				<label class="col-md-2" for="">List Price</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" id="ListPrice" name="ListPrice">
+					<?php
+					ValidationSummaryFor("ListPrice");
+					?>
 				</div>
 			</div>
 			<button type="submit" name="submit" class="btn btn-primary">Submit</button>
