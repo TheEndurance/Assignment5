@@ -1,18 +1,78 @@
-body{
-    font-size:1.5em;
+body {
+    font-size: 1.5em;
 }
+
 .error {
-    color:#c10c08;
-    font-weight:bold;
+    color: #c10c08;
+    font-weight: bold;
 }
+
+
 /* Bootstrap override */
+
 .navbar {
     border-radius: 0px;
-    margin-bottom:0px;
+    margin-bottom: 0px;
 }
-.form-control{
-    font-size:1.2em;
+
+.form-control {
+    font-size: 1.2em;
 }
-input,select{
-    min-height:50px;
+
+input,
+select {
+    min-height: 50px;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #DDD;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+    border-width: 0;
+}
+
+.nav-tabs>li>a {
+    border: none;
+    color: #666;
+    font-size:1.5em;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li>a:hover {
+    border: none;
+    color: #e95420 !important;
+    background: transparent;
+}
+
+.nav-tabs>li>a::after {
+    content: "";
+    background: #e95420;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+    transition: all 250ms ease 0s;
+    transform: scale(0);
+}
+
+.nav-tabs>li.active>a::after,
+.nav-tabs>li:hover>a::after {
+    transform: scale(1);
+}
+
+.tab-nav>li>a::after {
+    background: #21527d none repeat scroll 0% 0%;
+    color: #fff;
+}
+
+.tab-pane {
+    padding: 5px 0;
+}
+
+.tab-content {
+    padding: 10px
 }
