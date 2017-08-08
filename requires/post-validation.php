@@ -81,14 +81,3 @@ function ValidatePost($postName, $displayName, $tableDataValidation,$tableValida
         return addslashes($_POST[$postName]); //return the post value
     }
 }
-
-/*
-* Sets the value of an input field in a form if the page has been posted and the value is set
-*/
-function StickyForm($postVariable){
-    if(isset($_POST[$postVariable])){
-        return $_POST[$postVariable];
-    } else {
-        return null;
-    }
-}

@@ -9,8 +9,6 @@
 	//error array
 	$errors = array();
 
-
-
 	//Database Connection
 	$connection = ConnectToDatabase();
 
@@ -18,6 +16,16 @@
 	$vendorsQuery = $connection->prepare("SELECT VendorNo,VendorName from Vendors");
 	$vendorsQuery -> execute();
 
+	/*
+	* Sets the value of an input field in a form if the page has been posted and the value is set
+	*/
+	function StickyForm($postVariable){
+		if(isset($_POST[$postVariable])){
+			return $_POST[$postVariable];
+		} else {
+			return null;
+		}
+	}
 	
 	/*
 	* Creates a <select> dropdown list, taking a SELECT query ($theQuery) as the first parameter,
