@@ -10,24 +10,32 @@ var ErrorMessages = function () {
         PartsForm: [],
         VendorsForm: []
     };
+    var validationMessages = {
+        PartsForm: {
+            "VendorNo": "A Vendor must be selected",
+            "Description": "Description must contain at least one character",
+            "OnHand": "Parts on hand can only be a numeric value",
+            "OnOrder": "Parts on order can only be a numeric value",
+            "Cost": "Cost can only be a numeric value",
+            "ListPrice": "List price can only be a numeric value"
+        },
+        VendorsForm: {
 
-    var PartsValidationMessage = {
-        "VendorNo": "A Vendor must be selected",
-        "Description": "Description must contain atleast one character",
-        "OnHand": "Parts on hand can only be a numeric value",
-        "OnOrder": "Parts on order can only be a numeric value",
-        "Cost": "Cost can only be a numeric value",
-        "ListPrice": "List price can only be a numeric value"
-    }
-    var PartsDataValidation = {
-        "VendorNo": /[0-9]+/,
-        "Description": /.+/,
-        "OnHand": /[0-9]+/,
-        "OnOrder": /[0-9]+/,
-        "Cost": /[0-9]+/,
-        "ListPrice": /[0-9]+/
-    }
+        }
+    };
+    var dataValidationRules = {
+        PartsForm: {
+            "VendorNo": /[0-9]+/,
+            "Description": /.+/,
+            "OnHand": /[0-9]+/,
+            "OnOrder": /[0-9]+/,
+            "Cost": /[0-9]+/,
+            "ListPrice": /[0-9]+/
+        },
+        VendorsForm: {
 
+        }
+    };
     var AddErrorMessage = function (id, message) {
         'use strict';
         var newId = id + "Error";
@@ -63,7 +71,6 @@ var ErrorMessages = function () {
             }
         }
     }
-
     var UpdateCompoundErrors = function (formID) {
         "use strict";
         var compoundErrorLists = $("#" + formID + "Errors");
@@ -84,28 +91,21 @@ var ErrorMessages = function () {
         AddCompoundErrorMessage: AddCompoundErrorMessage,
         RemoveCompoundErrorMessage: RemoveCompoundErrorMessage,
         UpdateCompoundErrors: UpdateCompoundErrors,
-        PartsValidationMessage: PartsValidationMessage,
-        PartsDataValidation: PartsDataValidation,
+        validationMessages: validationMessages,
+        dataValidationRules: dataValidationRules,
         compoundErrorMessages: compoundErrorMessages
     }
 }();
 
 var FormController = function (errorMessages) {
-
     var ValidateSubmission = function (e) {
         "use strict";
         var id = e.target.id;
-        if (id == "PartsForm") {
-            var validationMessage = errorMessages.PartsValidationMessage;
-            var validationRules = errorMessages.PartsDataValidation;
-        } else if (id == "VendorsForm") {
-            //TODO:
-        }
         try {
-            for (var key in validationMessage) {
-                if (document.forms[id][key].value == null || !validationRules[key].test(document.forms[id][key].value)) {
-                    errorMessages.AddErrorMessage(key, validationMessage[key]);
-                    errorMessages.AddCompoundErrorMessage(validationMessage[key], id);
+            for (var key in errorMessages.validationMessages[id]) {
+                if (document.forms[id][key].value == null || !errorMessages.dataValidationRules[id][key].test(document.forms[id][key].value)) {
+                    errorMessages.AddErrorMessage(key, errorMessages.validationMessages[id][key]);
+                    errorMessages.AddCompoundErrorMessage(errorMessages.validationMessages[id][key], id);
                     errorMessages.UpdateCompoundErrors(id);
                     $("#" + key).focus();
                 }
@@ -117,25 +117,16 @@ var FormController = function (errorMessages) {
             e.preventDefault();
         }
     }
-
     var ValidateField = function (e) {
         "use strict"
         var key = e.target.id;
         var formID = $("#" + key).parents("form").first().attr('id');
-        var validationMessage;
-        var validationRules;
-        if (formID == "PartsForm") {
-            validationMessage = errorMessages.PartsValidationMessage;
-            validationRules = errorMessages.PartsDataValidation;
-        } else if (formID == "VendorsForm") {
-            //TODO:
-        }
-        if (!validationRules[key].test(document.forms[formID][key].value)) {
-            errorMessages.AddErrorMessage(key, validationMessage[key]);
-            errorMessages.AddCompoundErrorMessage(validationMessage[key], formID);
+        if (!errorMessages.dataValidationRules[formID][key].test(document.forms[formID][key].value)) {
+            errorMessages.AddErrorMessage(key, errorMessages.validationMessages[formID][key]);
+            errorMessages.AddCompoundErrorMessage(errorMessages.validationMessages[formID][key], formID);
         } else {
             errorMessages.RemoveErrorMessage(key);
-            errorMessages.RemoveCompoundErrorMessage(validationMessage[key], formID);
+            errorMessages.RemoveCompoundErrorMessage(errorMessages.validationMessages[formID][key], formID);
         }
         errorMessages.UpdateCompoundErrors(formID);
     }
@@ -157,7 +148,5 @@ window.onload = function () {
     cost.addEventListener('blur', FormController.ValidateField, false);
     listPrice.addEventListener('blur', FormController.ValidateField, false);
 
-
-    
 
 }

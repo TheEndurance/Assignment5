@@ -1,19 +1,32 @@
 <?php
 
 //Vendor Table Data Types
-$vendorDataTypes = array(
-    "VendorNo" => "number",
-    "VendorName" => "string",
-    "Address1" => "string",
-    "Address2" => "string",
-    "City" => "string",
-    "Prov" => "string",
-    "PostCode" => "string",
-    "Country" => "string",
-    "Phone" => "string",
-    "Fax" => "string"
+$vendorDataValidation = array(
+    "VendorNo" => "/[0-9]{4}/",
+    "VendorName" => "/.+/",
+    "Address1" => "/.+/",
+    "Address2" => "/.*/",
+    "City" => "/[a-zA-Z]+/",
+    "Prov" => "/[A-Z]{2}/",
+    "PostCode" => "/^[a-zA-Z0-9]{6}$/",
+    "Country" => "/.+/",
+    "Phone" => "/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/",
+    "Fax" =>"/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/"
 );
-//Parts Table Data Types
+
+$vendorValidationMessage = array(
+    "VendorNo" => "Vendor number must be numeric only and 4 digits in length",
+    "VendorName" => "Vendor name must contain at least one character",
+    "Address1" => "Address 1 must contain at least one character",
+    "Address2" => "",
+    "City" => "A city must have at least one character, and no numbers",
+    "Prov" => "Incorrect province format, correct format is ON, AB, KA, etc",
+    "PostCode" => "Incorrect postal code, acceptable formats are N2L2S3 or 60093",
+    "Country" => "List price can only be a numeric value",
+    "Phone" => "Incorrect phone number, acceptable format is 999-999-9999",
+    "Fax" => "Incorrect fax number, acceptable format is 999-999-9999"
+);
+
 $partValidationMessage = array(
     "VendorNo" => "A Vendor must be selected",
     "Description" => "Description must contain atleast one character",
@@ -50,7 +63,7 @@ function ValidateRegex($value, $regex)
 function ValidatePost($postName, $displayName, $tableDataValidation,$tableValidationMessage,$allowNull = false, $customMessage = "")
 {
     global $errors;
-    
+
     if (empty($_POST[$postName])) { //generic field is required message
         if ($allowNull==false) {
             $errors[$postName]= $displayName . ' is a required field';
@@ -65,7 +78,7 @@ function ValidatePost($postName, $displayName, $tableDataValidation,$tableValida
             return null;
         }
     } else {
-        return addslashes($_POST[$postName]); //return the popst value
+        return addslashes($_POST[$postName]); //return the post value
     }
 }
 
