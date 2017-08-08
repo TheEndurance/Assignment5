@@ -3,8 +3,8 @@
 //Vendor Table Data Types
 $vendorDataValidation = array(
     "V_VendorNo" => "/^[0-9]{4}$/",
-    "VendorName" => "/.+/",
-    "Address1" => "/.+/",
+    "VendorName" => "/[^\s].+/",
+    "Address1" => "/[^\s].+/",
     "Address2" => "/.*/",
     "City" => "/^[a-zA-Z\s]+$/",
     "Prov" => "/[A-Z]{2}/",
@@ -38,11 +38,11 @@ $partValidationMessage = array(
 
 $partDataValidation = array(
     "P_VendorNo" => "/[0-9]+/",
-    "Description" => "/.+/",
-    "OnHand" => "/[0-9]+/",
-    "OnOrder" => "/[0-9]+/",
-    "Cost" => "/[0-9]+/",
-    "ListPrice" => "/[0-9]+/"
+    "Description" => "/[^\s].+/",
+    "OnHand" => "/^\d$/",
+    "OnOrder" => "/^\d$/",
+    "Cost" => "/^\d$/",
+    "ListPrice" => "/^\d$/"
 );
 /*
 * Helper function for ValidatePost, that returns true if the value is the specified data type.

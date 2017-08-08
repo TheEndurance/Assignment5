@@ -28,21 +28,21 @@ var ErrorMessages = function () {
     var dataValidationRules = {
         PartsForm: {
             "P_VendorNo": /[0-9]+/,
-            "Description": /.+/,
-            "OnHand": /[0-9]+/,
-            "OnOrder": /[0-9]+/,
-            "Cost": /[0-9]+/,
-            "ListPrice": /[0-9]+/
+            "Description": /[^\s//].+/,
+            "OnHand": /^\d$/,
+            "OnOrder": /^\d$/,
+            "Cost": /^\d$/,
+            "ListPrice": /^\d$/
         },
         VendorsForm: {
             "V_VendorNo": /^[0-9]{4}$/,
-            "VendorName": /.+/,
-            "Address1": /.+/,
+            "VendorName": /[^\s//].+/,
+            "Address1": /[^\s//].+/,
             "Address2": /.*/,
             "City": /^[a-zA-Z\s]+$/,
             "Prov": /[A-Z]{2}/,
             "PostCode": /^[a-zA-Z0-9]{6}$/,
-            "Country": /.+/,
+            "Country": /[^\s//].+/,
             "Phone": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/,
             "Fax": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/
         }
@@ -151,13 +151,13 @@ window.onload = function () {
     var partsForm = document.getElementById("PartsForm");
     var vendorsForm = document.getElementById("VendorsForm");
 
-    partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
-    vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    // partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    // vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
 
-    for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
-        document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    }
-    for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
-        document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    }
+    // for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
+    //     document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
+    // }
+    // for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
+    //     document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
+    // }
 }
