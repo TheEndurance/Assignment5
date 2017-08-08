@@ -56,7 +56,7 @@
 			$_SESSION['V_VendorNo'] = ValidatePost("V_VendorNo","Vendor",$vendorDataValidation,$vendorValidationMessage,false,"A vendor must be selected");
 			$_SESSION['VendorName'] = ValidatePost("VendorName","Vendor name",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Address1'] = ValidatePost("Address1","Address 1",$vendorDataValidation,$vendorValidationMessage);
-			$_SESSION['Address2'] = ValidatePost("Address2","Address 2",$vendorDataValidation,$vendorValidationMessage);
+			$_SESSION['Address2'] = ValidatePost("Address2","Address 2",$vendorDataValidation,$vendorValidationMessage,true);
 			$_SESSION['City'] = ValidatePost("City","City",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Prov'] = ValidatePost("Prov","Province",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['PostCode'] = ValidatePost("PostCode","Postal code",$vendorDataValidation,$vendorValidationMessage);
@@ -193,26 +193,26 @@
 			</div>
 			<div role="tabpanel" class="tab-pane" id="Vendors">
 				<div class="well">
-					<?php
-					if(count($errors)>0 && isset($_POST['Vendors'])){
-					?>
-						<div id="VendorsFormErrors" class="errors">
-							<div class="alert alert-dismissible alert-danger">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								<strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
-							</div>
-							<ul>
-								<?php
-									foreach($errors as $error){
-										echo '<li class="error">'.$error.'</li>';
-									}
-								?>
-							</ul>
+					<div id="VendorsFormErrors" class="errors">
+						<?php
+						if(count($errors)>0 && isset($_POST['Parts'])){
+						?>
+						<div class="alert alert-dismissible alert-danger">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
 						</div>
-					<?php
-					}
-					?>
-					<form action="index.php" method="POST" role="form">
+						<ul>
+							<?php
+								foreach($errors as $error){
+									echo '<li class="text-danger">'.$error.'</li>';
+								}
+							?>
+						</ul>
+						<?php
+						}
+						?>
+					</div>
+					<form action="index.php" method="POST" role="form" id="VendorsForm">
 						<legend><h2>Insert record into the Vendors table</h2></legend>
 						
 						<div class="form-group row">

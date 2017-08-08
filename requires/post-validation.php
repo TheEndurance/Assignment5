@@ -2,33 +2,33 @@
 
 //Vendor Table Data Types
 $vendorDataValidation = array(
-    "VendorNo" => "/[0-9]{4}/",
+    "V_VendorNo" => "/[0-9]{4}/",
     "VendorName" => "/.+/",
     "Address1" => "/.+/",
     "Address2" => "/.*/",
-    "City" => "/[a-zA-Z]+/",
+    "City" => "/^[a-zA-Z\s]+$/",
     "Prov" => "/[A-Z]{2}/",
     "PostCode" => "/^[a-zA-Z0-9]{6}$/",
-    "Country" => "/.+/",
+    "Country" => "/[a-zA-Z]+/",
     "Phone" => "/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/",
     "Fax" =>"/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/"
 );
 
 $vendorValidationMessage = array(
-    "VendorNo" => "Vendor number must be numeric only and 4 digits in length",
+    "V_VendorNo" => "Vendor number must be numeric only and 4 digits in length",
     "VendorName" => "Vendor name must contain at least one character",
     "Address1" => "Address 1 must contain at least one character",
     "Address2" => "",
     "City" => "A city must have at least one character, and no numbers",
     "Prov" => "Incorrect province format, correct format is ON, AB, KA, etc",
     "PostCode" => "Incorrect postal code, acceptable formats are N2L2S3 or 60093",
-    "Country" => "List price can only be a numeric value",
+    "Country" => "Country should be at least one character, no numbers",
     "Phone" => "Incorrect phone number, acceptable format is 999-999-9999",
     "Fax" => "Incorrect fax number, acceptable format is 999-999-9999"
 );
 
 $partValidationMessage = array(
-    "VendorNo" => "A Vendor must be selected",
+    "P_VendorNo" => "A Vendor must be selected",
     "Description" => "Description must contain atleast one character",
     "OnHand" => "Parts on hand can only be a numeric value",
     "OnOrder" => "Parts on order can only be a numeric value",
@@ -37,7 +37,7 @@ $partValidationMessage = array(
 );
 
 $partDataValidation = array(
-    "VendorNo" => "/[0-9]+/",
+    "P_VendorNo" => "/[0-9]+/",
     "Description" => "/.+/",
     "OnHand" => "/[0-9]+/",
     "OnOrder" => "/[0-9]+/",

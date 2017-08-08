@@ -1,9 +1,3 @@
-var vendorNo = document.getElementById("VendorNo");
-var description = document.getElementById("Description");
-var onHand = document.getElementById("OnHand");
-var onOrder = document.getElementById("OnOrder");
-var cost = document.getElementById("Cost");
-var listPrice = document.getElementById("ListPrice");
 
 var ErrorMessages = function () {
     var compoundErrorMessages = {
@@ -12,7 +6,7 @@ var ErrorMessages = function () {
     };
     var validationMessages = {
         PartsForm: {
-            "VendorNo": "A Vendor must be selected",
+            "P_VendorNo": "A Vendor must be selected",
             "Description": "Description must contain at least one character",
             "OnHand": "Parts on hand can only be a numeric value",
             "OnOrder": "Parts on order can only be a numeric value",
@@ -20,12 +14,21 @@ var ErrorMessages = function () {
             "ListPrice": "List price can only be a numeric value"
         },
         VendorsForm: {
-
+            "V_VendorNo": "Vendor number must be numeric only and 4 digits in length",
+            "VendorName": "Vendor name must contain at least one character",
+            "Address1": "Address 1 must contain at least one character",
+            "Address2": "",
+            "City": "A city must have at least one character, and no numbers",
+            "Prov": "Incorrect province format, correct format is ON, AB, KA, etc",
+            "PostCode": "Incorrect postal code, acceptable formats are N2L2S3 or 60093",
+            "Country": "Country should be at least one character, no numbers",
+            "Phone": "Incorrect phone number, acceptable format is 999-999-9999",
+            "Fax": "Incorrect fax number, acceptable format is 999-999-9999"
         }
     };
     var dataValidationRules = {
         PartsForm: {
-            "VendorNo": /[0-9]+/,
+            "P_VendorNo": /[0-9]+/,
             "Description": /.+/,
             "OnHand": /[0-9]+/,
             "OnOrder": /[0-9]+/,
@@ -33,7 +36,16 @@ var ErrorMessages = function () {
             "ListPrice": /[0-9]+/
         },
         VendorsForm: {
-
+            "V_VendorNo": /[0-9]{4}/,
+            "VendorName": /.+/,
+            "Address1": /.+/,
+            "Address2": /.*/,
+            "City": /^[a-zA-Z\s]+$/,
+            "Prov": /[A-Z]{2}/,
+            "PostCode": /^[a-zA-Z0-9]{6}$/,
+            "Country": /.+/,
+            "Phone": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/,
+            "Fax": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/
         }
     };
     var AddErrorMessage = function (id, message) {
@@ -44,7 +56,6 @@ var ErrorMessages = function () {
         if (span) {
             span.firstChild.value = message;
         } else {
-            console.log(id);
             $("#" + id).parent('div').append('<span id="' + newId + '" class="text-danger">' + message + '</span>');
             $("#" + id).focus();
         }
@@ -139,14 +150,16 @@ var FormController = function (errorMessages) {
 
 window.onload = function () {
     var partsForm = document.getElementById("PartsForm");
+    var vendorsForm = document.getElementById("VendorsForm");
     partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    vendorsForm.addEventListener('submit',FormController.ValidateSubmission,false);
 
-    vendorNo.addEventListener('blur', FormController.ValidateField, false);
-    description.addEventListener('blur', FormController.ValidateField, false);
-    onOrder.addEventListener('blur', FormController.ValidateField, false);
-    onHand.addEventListener('blur', FormController.ValidateField, false);
-    cost.addEventListener('blur', FormController.ValidateField, false);
-    listPrice.addEventListener('blur', FormController.ValidateField, false);
+    for(var i=0;i<document.forms["PartsForm"].length-1;i++){
+        document.forms["PartsForm"][i].addEventListener('blur',FormController.ValidateField,false);
+
+    }
+    for (var i=0;i<document.forms["VendorsForm"].length-1;i++)
+        document.forms["VendorsForm"][i].addEventListener('blur',FormController.ValidateField,false);
 
 
 }
