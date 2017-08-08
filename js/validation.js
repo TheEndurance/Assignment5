@@ -1,4 +1,3 @@
-
 var ErrorMessages = function () {
     var compoundErrorMessages = {
         PartsForm: [],
@@ -36,7 +35,7 @@ var ErrorMessages = function () {
             "ListPrice": /[0-9]+/
         },
         VendorsForm: {
-            "V_VendorNo": /[0-9]{4}/,
+            "V_VendorNo": /^[0-9]{4}$/,
             "VendorName": /.+/,
             "Address1": /.+/,
             "Address2": /.*/,
@@ -151,15 +150,14 @@ var FormController = function (errorMessages) {
 window.onload = function () {
     var partsForm = document.getElementById("PartsForm");
     var vendorsForm = document.getElementById("VendorsForm");
+
     partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
-    vendorsForm.addEventListener('submit',FormController.ValidateSubmission,false);
+    vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
 
-    for(var i=0;i<document.forms["PartsForm"].length-1;i++){
-        document.forms["PartsForm"][i].addEventListener('blur',FormController.ValidateField,false);
-
+    for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
+        document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
     }
-    for (var i=0;i<document.forms["VendorsForm"].length-1;i++)
-        document.forms["VendorsForm"][i].addEventListener('blur',FormController.ValidateField,false);
-
-
+    for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
+        document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
+    }
 }

@@ -2,7 +2,7 @@
 
 //Vendor Table Data Types
 $vendorDataValidation = array(
-    "V_VendorNo" => "/[0-9]{4}/",
+    "V_VendorNo" => "/^[0-9]{4}$/",
     "VendorName" => "/.+/",
     "Address1" => "/.+/",
     "Address2" => "/.*/",
@@ -49,7 +49,7 @@ $partDataValidation = array(
 */
 function ValidateRegex($value, $regex)
 {
-    if(preg_match($regex,$value)==1){
+    if (preg_match($regex, $value)==1) {
         return true;
     }
     return false;
@@ -60,7 +60,7 @@ function ValidateRegex($value, $regex)
 * the $errors array if it is empty and returns null.  
 * Otherwise it will return the POST value.
 */
-function ValidatePost($postName, $displayName, $tableDataValidation,$tableValidationMessage,$allowNull = false, $customMessage = "")
+function ValidatePost($postName, $displayName, $tableDataValidation, $tableValidationMessage, $allowNull = false, $customMessage = "")
 {
     global $errors;
 
@@ -69,7 +69,7 @@ function ValidatePost($postName, $displayName, $tableDataValidation,$tableValida
             $errors[$postName]= $displayName . ' is a required field';
         }
         return null;
-    } elseif (!ValidateRegex($_POST[$postName], $tableDataValidation[$postName])) { //POST value is not the correct data type
+    } elseif (!ValidateRegex($_POST[$postName], $tableDataValidation[$postName])) {//POST value does not pass the regular expression validation
         if (strlen($customMessage)>0) { // Check if a custom error message has been specified
             $errors[$postName] = $customMessage;
             return null;
@@ -80,4 +80,43 @@ function ValidatePost($postName, $displayName, $tableDataValidation,$tableValida
     } else {
         return addslashes($_POST[$postName]); //return the post value
     }
+}
+
+/*
+* Validates a POST value with name $postName, and adds an error message to 
+* the $errors array if it is empty and returns null. 
+* Also validates the post by checking against a regular expression
+* and a custom predicate function passed as $predicate parameter 
+* Otherwise it will return the POST value.
+*/
+function ValidatePostByPredicate($postName, $displayName, $tableDataValidation, $tableValidationMessage, $predicate, $customMessage)
+{
+    global $errors;
+
+    if (empty($_POST[$postName])) { //generic field is required message
+        $errors[$postName]= $displayName . ' is a required field';
+        return null;
+    } elseif (!ValidateRegex($_POST[$postName], $tableDataValidation[$postName])) { //POST value does not pass the regular expression validation
+         $errors[$postName] = $tableValidationMessage[$postName];
+            return null;
+    } elseif (call_user_func($predicate,$_POST[$postName])) { //if the predicate logic is true for the POST value
+        $errors[$postName] = $customMessage;
+        return null;
+    } else {
+        return addslashes($_POST[$postName]); //return the post value
+    }
+}
+
+
+function DuplicateVendorPredicate($postValue)
+{
+    global $vendorsQuery;
+    while ($row = $vendorsQuery->fetch()) {
+        if ($row['VendorNo']==$postValue) {
+            echo ($row['VendorNo']);
+            echo ($postValue);
+            return true;
+        }
+    }
+        return false;
 }

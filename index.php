@@ -12,10 +12,11 @@
 	//Database Connection
 	$connection = ConnectToDatabase();
 
-	//Vendor Number and Name query
+	//Vendor table, Vendor Number and Name query
 	$vendorsQuery = $connection->prepare("SELECT VendorNo,VendorName from Vendors");
 	$vendorsQuery -> execute();
 
+	
 	/*
 	* Sets the value of an input field in a form if the page has been posted and the value is set
 	*/
@@ -47,7 +48,7 @@
 	function ValidationSummaryFor($postName,$formSubmitName){
 		global $errors;
 		if (!empty($errors[$postName]) && isset($_POST[$formSubmitName])){
-			echo '<span class="text-danger">' . $errors[$postName] . '</span>';
+			echo '<span id="'. $postName . 'Error"'  .  'class="text-danger">' . $errors[$postName] . '</span>';
 		}
 	}
 	
@@ -61,7 +62,7 @@
 			$_SESSION['Cost'] = ValidatePost("Cost","Cost",$partDataValidation,$partValidationMessage);
 			$_SESSION['ListPrice'] = ValidatePost("ListPrice","List price",$partDataValidation,$partValidationMessage);
 		} else if (isset($_POST['Vendors'])){
-			$_SESSION['V_VendorNo'] = ValidatePost("V_VendorNo","Vendor",$vendorDataValidation,$vendorValidationMessage,false,"A vendor must be selected");
+			$_SESSION['V_VendorNo'] = ValidatePostByPredicate("V_VendorNo","Vendor",$vendorDataValidation,$vendorValidationMessage,"DuplicateVendorPredicate","Duplicate vendor primary key, enter a different number");
 			$_SESSION['VendorName'] = ValidatePost("VendorName","Vendor name",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Address1'] = ValidatePost("Address1","Address 1",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Address2'] = ValidatePost("Address2","Address 2",$vendorDataValidation,$vendorValidationMessage,true);
@@ -73,12 +74,15 @@
 			$_SESSION['Fax'] = ValidatePost("Fax","Fax number",$vendorDataValidation,$vendorValidationMessage);
 		}
 		if (count($errors)==0){
-			if (isset($_POST['SubmitParts'])){
+			if (isset($_POST['Parts'])){
+				$_SESSION['PartFormValid'] = true;
 				header('Location: parts.php');
-			} elseif (isset($_POST['SubmitVendors'])){
+			} elseif (isset($_POST['Vendors'])){
+				
+				$_SESSION['Vendors'] = true;
 				header('Location: vendors.php');
 			}
-		}
+		} 
     } // END IF POST
 ?>
 
@@ -96,17 +100,17 @@
 	<div role="tabpanel">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active">
+			<li role="presentation" class="<?php echo isset($_POST['Vendors'])? '' : 'active' ?>">
 				<a href="#Parts" aria-controls="Parts" role="tab" data-toggle="tab">Parts</a>
 			</li>
-			<li role="presentation">
+			<li role="presentation" class="<?php echo isset($_POST['Vendors'])? 'active' : '' ?>">
 				<a href="#Vendors" aria-controls="tab" role="tab" data-toggle="tab">Vendors</a>
 			</li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="Parts">
+			<div role="tabpanel" class="<?php echo isset($_POST['Vendors'])? 'tab-pane' : 'tab-pane active' ?>" id="Parts">
 				<div class="well">	
 					<div id="PartsFormErrors" class="errors">
 						<?php
@@ -199,11 +203,11 @@
 					</form>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="Vendors">
+			<div role="tabpanel" class="<?php echo isset($_POST['Vendors'])? 'tab-pane active' : 'tab-pane' ?>" id="Vendors" >
 				<div class="well">
 					<div id="VendorsFormErrors" class="errors">
 						<?php
-						if(count($errors)>0 && isset($_POST['Parts'])){
+						if(count($errors)>0 && isset($_POST['Vendors'])){
 						?>
 						<div class="alert alert-dismissible alert-danger">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
