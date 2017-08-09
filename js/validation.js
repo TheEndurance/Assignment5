@@ -29,10 +29,10 @@ var ErrorMessages = function () {
         PartsForm: {
             "P_VendorNo": /[0-9]+/,
             "Description": /[^\s//].+/,
-            "OnHand": /^[0-9]$/,
-            "OnOrder": /^\d$/,
-            "Cost": /^\d$/,
-            "ListPrice": /^\d$/
+            "OnHand": /^\d+$/,
+            "OnOrder": /^\d+$/,
+            "Cost": /^\d+$/,
+            "ListPrice": /^\d+$/
         },
         VendorsForm: {
             "V_VendorNo": /^[0-9]{4}$/,

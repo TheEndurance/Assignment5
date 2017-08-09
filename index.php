@@ -78,8 +78,7 @@
 				$_SESSION['PartFormValid'] = true;
 				header('Location: parts.php');
 			} elseif (isset($_POST['Vendors'])){
-				
-				$_SESSION['Vendors'] = true;
+				$_SESSION['VendorFormValid'] = true;
 				header('Location: vendors.php');
 			}
 		} 

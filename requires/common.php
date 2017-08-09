@@ -5,5 +5,8 @@
     */
     function AddQuotesToString($theString)
     {
+        if (strlen($theString)>0){
         return "'" . $theString . "'";
+        }
+        return null;
     }
