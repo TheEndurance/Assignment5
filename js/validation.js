@@ -29,7 +29,7 @@ var ErrorMessages = function () {
         PartsForm: {
             "P_VendorNo": /[0-9]+/,
             "Description": /[^\s//].+/,
-            "OnHand": /^\d$/,
+            "OnHand": /^[0-9]$/,
             "OnOrder": /^\d$/,
             "Cost": /^\d$/,
             "ListPrice": /^\d$/
@@ -151,13 +151,13 @@ window.onload = function () {
     var partsForm = document.getElementById("PartsForm");
     var vendorsForm = document.getElementById("VendorsForm");
 
-    // partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
-    // vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
 
-    // for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
-    //     document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    // }
-    // for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
-    //     document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    // }
+    for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
+        document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
+    }
+    for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
+        document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
+    }
 }

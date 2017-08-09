@@ -39,10 +39,10 @@ $partValidationMessage = array(
 $partDataValidation = array(
     "P_VendorNo" => "/[0-9]+/",
     "Description" => "/[^\s].+/",
-    "OnHand" => "/^\d$/",
-    "OnOrder" => "/^\d$/",
-    "Cost" => "/^\d$/",
-    "ListPrice" => "/^\d$/"
+    "OnHand" => "/^\d+$/",
+    "OnOrder" => "/^\d+$/",
+    "Cost" => "/^\d+$/",
+    "ListPrice" => "/^\d+$/"
 );
 /*
 * Helper function for ValidatePost, that returns true if the value is the specified data type.
