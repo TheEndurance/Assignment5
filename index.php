@@ -82,6 +82,9 @@
 			} elseif (isset($_POST['Vendors'])){
 				$_SESSION['VendorFormValid'] = true;
 				header('Location: vendors.php');
+			} elseif (isset($_POST['VendorQuery'])){
+				$_SESSION['VendorQueryFormValid'] = true;
+				header('Location: parameter.php');
 			}
 		} 
     } // END IF POST
@@ -207,7 +210,6 @@
 					</form>
 				</div>
 			</div>
-
 
 			<div role="tabpanel" class="<?php echo isset($_POST['Vendors'])? 'tab-pane active' : 'tab-pane' ?>" id="Vendors" >
 				<div class="well">
@@ -360,7 +362,7 @@
 						}
 						?>
 					</div>
-					<form action="parameter.php" method="POST" role="form" id="VendorQueryForm">
+					<form action="index.php" method="POST" role="form" id="VendorQueryForm">
 						<legend><h2>Query Vendor names by Part description</h2></legend>
 						
 						<div class="form-group row">
