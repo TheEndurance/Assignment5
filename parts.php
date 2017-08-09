@@ -2,19 +2,18 @@
     session_start();
     include('includes/header.html');
     require('connection.php');
-    require('requires/common.php');
     
     $connection = ConnectToDatabase();
 
     if (!empty($_SESSION['PartFormValid'])) {
         $vendorNo = $_SESSION['P_VendorNo'];
-        $description = AddQuotesToString($_SESSION['Description']);
+        $description = ($_SESSION['Description']);
         $onHand = $_SESSION['OnHand'];
         $onOrder =$_SESSION['OnOrder'];
         $cost =$_SESSION['Cost'];
         $listPrice = $_SESSION['ListPrice'];
 
-        $cmd = 'INSERT INTO Parts (VendorNo,Description,OnHand,OnOrder,Cost,ListPrice) VALUES (' . $vendorNo . ',' . $description  . ',' . $onHand . ',' . $onOrder . ',' . $cost . ',' . $listPrice . ');';
+        $cmd = "INSERT INTO Parts (VendorNo,Description,OnHand,OnOrder,Cost,ListPrice) VALUES ($vendorNo,'$description',$onHand,$onOrder, $cost, $listPrice);";
     }
 ?>
 <div class="container">

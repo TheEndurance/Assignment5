@@ -8,26 +8,22 @@
 
     if (!empty($_SESSION['VendorFormValid'])) {
         $vendorNo = $_SESSION['V_VendorNo'];
-        $vendorName = AddQuotesToString($_SESSION['VendorName']);
-        $address1 =AddQuotesToString($_SESSION['Address1']);
-        $address2 =AddQuotesToString($_SESSION['Address2']);
-        $city = AddQuotesToString($_SESSION['City']);
-        $prov = AddQuotesToString($_SESSION['Prov']);
-        $postCode =AddQuotesToString($_SESSION['PostCode']);
-        $country =AddQuotesToString($_SESSION['Country']);
-        $phone = AddQuotesToString($_SESSION['Phone']);
-        $fax = AddQuotesToString($_SESSION['Fax']);
+        $vendorName = $_SESSION['VendorName'];
+        $address1 =$_SESSION['Address1'];
+        $address2 =$_SESSION['Address2'];
+        $city = $_SESSION['City'];
+        $prov = $_SESSION['Prov'];
+        $postCode =$_SESSION['PostCode'];
+        $country =$_SESSION['Country'];
+        $phone = $_SESSION['Phone'];
+        $fax = $_SESSION['Fax'];
         
         if (strlen($address2)>0){
-            $cmd = 'INSERT INTO Vendors (VendorNo,VendorName,Address1,Address2,City,Prov,PostCode,Country,Phone,Fax)'.
-            'VALUES (' . $vendorNo . ',' . $vendorName  . ',' . $address1 . ',' 
-            . $address2 . ',' . $city . ',' . $prov .  ',' . $postCode . ',' 
-            . $country .   ',' . $phone .  ',' . $fax . ');';
+            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,Address2,City,Prov,PostCode,Country,Phone,Fax)'.
+            'VALUES ($vendorNo,'$vendorName', '$address1','$address2','$city','$prov','$postCode','$country','$phone','$fax');";
         } else {
-            $cmd = 'INSERT INTO Vendors (VendorNo,VendorName,Address1,City,Prov,PostCode,Country,Phone,Fax)'.
-            'VALUES (' . $vendorNo . ',' . $vendorName  . ',' . $address1 . ',' 
-            . $city . ',' . $prov .  ',' . $postCode . ',' 
-            . $country .   ',' . $phone .  ',' . $fax . ');';
+            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,City,Prov,PostCode,Country,Phone,Fax)'.
+            'VALUES ($vendorNo,'$vendorName', '$address1','$city','$prov','$postCode','$country','$phone','$fax');";
         }
     }
 ?>
