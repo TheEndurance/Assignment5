@@ -99,17 +99,20 @@
 	<div role="tabpanel">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="<?php echo isset($_POST['Vendors'])? '' : 'active' ?>">
-				<a href="#Parts" aria-controls="Parts" role="tab" data-toggle="tab">Parts</a>
+			<li role="presentation" class="<?php echo (isset($_POST['Vendors']) || isset($_POST['VendorQuery'])) ? '' : 'active' ?>">
+				<a href="#Parts" aria-controls="Parts" role="tab" data-toggle="tab">Add new Parts</a>
 			</li>
 			<li role="presentation" class="<?php echo isset($_POST['Vendors'])? 'active' : '' ?>">
-				<a href="#Vendors" aria-controls="tab" role="tab" data-toggle="tab">Vendors</a>
+				<a href="#Vendors" aria-controls="tab" role="tab" data-toggle="tab">Add new Vendors</a>
+			</li>
+			<li role="presentation" class="<?php echo isset($_POST['VendorQuery'])? 'active' : '' ?>">
+				<a href="#VendorQuery" aria-controls="tab" role="tab" data-toggle="tab">Vendor query by part description</a>
 			</li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div role="tabpanel" class="<?php echo isset($_POST['Vendors'])? 'tab-pane' : 'tab-pane active' ?>" id="Parts">
+			<div role="tabpanel" class="<?php echo (isset($_POST['Vendors']) || isset($_POST['VendorQuery'])) ? 'tab-pane' : 'tab-pane active' ?>" id="Parts">
 				<div class="well">	
 					<div id="PartsFormErrors" class="errors">
 						<?php
@@ -202,6 +205,8 @@
 					</form>
 				</div>
 			</div>
+
+
 			<div role="tabpanel" class="<?php echo isset($_POST['Vendors'])? 'tab-pane active' : 'tab-pane' ?>" id="Vendors" >
 				<div class="well">
 					<div id="VendorsFormErrors" class="errors">
@@ -328,6 +333,45 @@
 						</div>
 
 						<button type="submit" name="Vendors" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+
+			<div role="tabpanel" class="<?php echo isset($_POST['VendorQuery'])? 'tab-pane active' : 'tab-pane' ?>" id="VendorQuery" >
+				<div class="well">
+					<div id="VendorQueryFormErrors" class="errors">
+						<?php
+						if(count($errors)>0 && isset($_POST['VendorQuery'])){
+						?>
+						<div class="alert alert-dismissible alert-danger">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+						</div>
+						<ul>
+							<?php
+								foreach($errors as $error){
+									echo '<li class="text-danger">'.$error.'</li>';
+								}
+							?>
+						</ul>
+						<?php
+						}
+						?>
+					</div>
+					<form action="parameter.php" method="POST" role="form" id="VendorQueryForm">
+						<legend><h2>Query Vendor names by Part description</h2></legend>
+						
+						<div class="form-group row">
+							<label class="col-md-2" for="Q_Description">Part Description</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" id="Q_Description" name="Q_Description"  value="<?php echo StickyForm('Q_Description') ?>">
+								<?php
+								ValidationSummaryFor("Q_Description","VendorQuery");
+								?>
+							</div>
+						</div>
+						
+						<button type="submit" name="VendorQuery" class="btn btn-primary">Submit</button>
 					</form>
 				</div>
 			</div>
