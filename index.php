@@ -95,7 +95,7 @@
 		<h1>Welcome!</h1>
 		<p>Click on the tabs below to insert records into the parts and vendors tables, as well as query the database for vendors by part description.</p>
 
-		<div class="alert alert-dismissible alert-warning">
+		<div class="alert alert-dismissible alert-info">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<p>
 				<strong> Heads up! </strong>Each tab contains a form to fill out relevant information. 
@@ -104,7 +104,7 @@
 		</div>
 		
 		<p>
-			<a href ="#page"class="btn btn-primary btn-lg">Lets go!</a>
+			<a href ="#page"class="btn btn-primary btn-lg">Start!</a>
 		</p>
 	</div>
 </div>
