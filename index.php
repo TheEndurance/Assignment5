@@ -72,6 +72,8 @@
 			$_SESSION['Country'] = ValidatePost("Country","Country",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Phone'] = ValidatePost("Phone","Phone number",$vendorDataValidation,$vendorValidationMessage);
 			$_SESSION['Fax'] = ValidatePost("Fax","Fax number",$vendorDataValidation,$vendorValidationMessage);
+		} else if (isset($_POST['VendorQuery'])){
+			$_SESSION['Q_Description'] = ValidatePost("Q_Description","Part description",$vendorQueryDataValidation,$vendorQueryValidationMessage);
 		}
 		if (count($errors)==0){
 			if (isset($_POST['Parts'])){

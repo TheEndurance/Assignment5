@@ -1,7 +1,9 @@
 var ErrorMessages = function () {
     var compoundErrorMessages = {
         PartsForm: [],
-        VendorsForm: []
+        VendorsForm: [],
+        VendorQueryForm: []
+
     };
     var validationMessages = {
         PartsForm: {
@@ -23,6 +25,9 @@ var ErrorMessages = function () {
             "Country": "Country should be at least one character, no numbers",
             "Phone": "Incorrect phone number, acceptable format is 999-999-9999",
             "Fax": "Incorrect fax number, acceptable format is 999-999-9999"
+        },
+        VendorQueryForm: {
+            "Q_Description": "Part description must contain at least one character or number"
         }
     };
     var dataValidationRules = {
@@ -45,7 +50,11 @@ var ErrorMessages = function () {
             "Country": /[^\s//].+/,
             "Phone": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/,
             "Fax": /^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/
+        },
+        VendorQueryForm: {
+            "Q_Description": /[a-zA-Z0-9]+/
         }
+
     };
     var AddErrorMessage = function (id, message) {
         'use strict';
@@ -65,6 +74,7 @@ var ErrorMessages = function () {
     }
     var AddCompoundErrorMessage = function (message, formID) {
         "use strict";
+        console.log(formID);
         for (var i = 0; i < compoundErrorMessages[formID].length; i++) {
             if (compoundErrorMessages[formID][i] == message) {
                 return;
@@ -116,6 +126,7 @@ var FormController = function (errorMessages) {
                 if (document.forms[id][key].value == null || !errorMessages.dataValidationRules[id][key].test(document.forms[id][key].value)) {
                     errorMessages.AddErrorMessage(key, errorMessages.validationMessages[id][key]);
                     errorMessages.AddCompoundErrorMessage(errorMessages.validationMessages[id][key], id);
+                    console.log(id);
                     errorMessages.UpdateCompoundErrors(id);
                     $("#" + key).focus();
                 }
@@ -150,14 +161,16 @@ var FormController = function (errorMessages) {
 window.onload = function () {
     var partsForm = document.getElementById("PartsForm");
     var vendorsForm = document.getElementById("VendorsForm");
+    var vendorQueryForm = document.getElementById("VendorQueryForm");
 
     partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
     vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
+    vendorQueryForm.addEventListener('submit',FormController.ValidateSubmission,false);
+    
+    for (var j = 0; j < document.forms.length; j++) {
+        for (var i = 0; i < document.forms[j].length-1 ; i++) {
+            document.forms[j][i].addEventListener('blur', FormController.ValidateField, false);
+        }
+    }
 
-    for (var i = 0; i < document.forms["PartsForm"].length - 1; i++) {
-        document.forms["PartsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    }
-    for (var i = 0; i < document.forms["VendorsForm"].length - 1; i++) {
-        document.forms["VendorsForm"][i].addEventListener('blur', FormController.ValidateField, false);
-    }
 }

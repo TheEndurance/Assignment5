@@ -44,6 +44,14 @@ $partDataValidation = array(
     "Cost" => "/^\d+$/",
     "ListPrice" => "/^\d+$/"
 );
+
+$vendorQueryValidationMessage = array(
+    "Q_Description" => "Description must contain atleast one letter or number",
+);
+
+$vendorQueryDataValidation = array(
+    "Q_Description" => "/[a-zA-Z0-9]+/",
+);
 /*
 * Helper function for ValidatePost, that returns true if the value is the specified data type.
 */
