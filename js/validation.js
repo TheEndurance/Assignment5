@@ -36,8 +36,8 @@ var ErrorMessages = function () {
             "Description": /[^\s//].+/,
             "OnHand": /^\d+$/,
             "OnOrder": /^\d+$/,
-            "Cost": /^\d+$/,
-            "ListPrice": /^\d+$/
+            "Cost": /^\d+[.]?\d+$/,
+            "ListPrice": /^\d+[.]?\d+$/
         },
         VendorsForm: {
             "V_VendorNo": /^[0-9]{4}$/,

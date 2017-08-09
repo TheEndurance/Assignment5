@@ -42,8 +42,8 @@ $partDataValidation = array(
     "Description" => "/[^\s].+/",
     "OnHand" => "/^\d+$/",
     "OnOrder" => "/^\d+$/",
-    "Cost" => "/^\d+$/",
-    "ListPrice" => "/^\d+$/"
+    "Cost" => "/^\d+[.]*\d+$/",
+    "ListPrice" => "/^\d+[.]*\d+$/"
 );
 
 $vendorQueryValidationMessage = array(
