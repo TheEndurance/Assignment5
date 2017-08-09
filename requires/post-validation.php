@@ -1,18 +1,5 @@
 <?php
 
-//Vendor Table Data Types
-$vendorDataValidation = array(
-    "V_VendorNo" => "/^[0-9]{4}$/",
-    "VendorName" => "/[^\s].+/",
-    "Address1" => "/[^\s].+/",
-    "Address2" => "/.*/",
-    "City" => "/^[a-zA-Z\s]+$/",
-    "Prov" => "/[A-Z]{2}/",
-    "PostCode" => "/^[a-zA-Z0-9]{6}$/",
-    "Country" => "/[a-zA-Z]+/",
-    "Phone" => "/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/",
-    "Fax" =>"/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/"
-);
 
 $vendorValidationMessage = array(
     "V_VendorNo" => "Vendor number must be numeric only and 4 digits in length",
@@ -26,6 +13,20 @@ $vendorValidationMessage = array(
     "Phone" => "Incorrect phone number, acceptable format is 999-999-9999",
     "Fax" => "Incorrect fax number, acceptable format is 999-999-9999"
 );
+
+$vendorDataValidation = array(
+    "V_VendorNo" => "/^[0-9]{4}$/",
+    "VendorName" => "/[^\s].+/",
+    "Address1" => "/[^\s].+/",
+    "Address2" => "/.*/",
+    "City" => "/[^\s].+/",
+    "Prov" => "/[A-Z]{2}/",
+    "PostCode" => "/^[a-zA-Z0-9]{6}$/",
+    "Country" => "/[a-zA-Z]+/",
+    "Phone" => "/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/",
+    "Fax" =>"/^[0-9]{3}[-\s]{1}[0-9]{3}[-\s]{1}[0-9]{4}$/"
+);
+
 
 $partValidationMessage = array(
     "P_VendorNo" => "A Vendor must be selected",

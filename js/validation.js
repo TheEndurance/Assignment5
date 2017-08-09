@@ -44,7 +44,7 @@ var ErrorMessages = function () {
             "VendorName": /[^\s//].+/,
             "Address1": /[^\s//].+/,
             "Address2": /.*/,
-            "City": /^[a-zA-Z\s]+$/,
+            "City":  /[^\s//].+/,
             "Prov": /[A-Z]{2}/,
             "PostCode": /^[a-zA-Z0-9]{6}$/,
             "Country": /[^\s//].+/,
@@ -166,7 +166,7 @@ window.onload = function () {
     partsForm.addEventListener('submit', FormController.ValidateSubmission, false);
     vendorsForm.addEventListener('submit', FormController.ValidateSubmission, false);
     vendorQueryForm.addEventListener('submit',FormController.ValidateSubmission,false);
-    
+
     for (var j = 0; j < document.forms.length; j++) {
         for (var i = 0; i < document.forms[j].length-1 ; i++) {
             document.forms[j][i].addEventListener('blur', FormController.ValidateField, false);
