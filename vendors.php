@@ -2,7 +2,6 @@
     session_start();
     include('includes/header.html');
     require('connection.php');
-    require('requires/common.php');
     
     $connection = ConnectToDatabase();
 
@@ -19,11 +18,11 @@
         $fax = $_SESSION['Fax'];
         
         if (strlen($address2)>0){
-            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,Address2,City,Prov,PostCode,Country,Phone,Fax)'.
-            'VALUES ($vendorNo,'$vendorName', '$address1','$address2','$city','$prov','$postCode','$country','$phone','$fax');";
+            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,Address2,City,Prov,PostCode,Country,Phone,Fax)
+            VALUES ($vendorNo,'$vendorName', '$address1','$address2','$city','$prov','$postCode','$country','$phone','$fax');";
         } else {
-            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,City,Prov,PostCode,Country,Phone,Fax)'.
-            'VALUES ($vendorNo,'$vendorName', '$address1','$city','$prov','$postCode','$country','$phone','$fax');";
+            $cmd = "INSERT INTO Vendors (VendorNo,VendorName,Address1,City,Prov,PostCode,Country,Phone,Fax)
+            VALUES ($vendorNo,'$vendorName', '$address1','$city','$prov','$postCode','$country','$phone','$fax');";
         }
     }
 ?>
