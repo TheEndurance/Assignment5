@@ -74,7 +74,6 @@ var ErrorMessages = function () {
     }
     var AddCompoundErrorMessage = function (message, formID) {
         "use strict";
-        console.log(formID);
         for (var i = 0; i < compoundErrorMessages[formID].length; i++) {
             if (compoundErrorMessages[formID][i] == message) {
                 return;
@@ -126,7 +125,6 @@ var FormController = function (errorMessages) {
                 if (document.forms[id][key].value == null || !errorMessages.dataValidationRules[id][key].test(document.forms[id][key].value)) {
                     errorMessages.AddErrorMessage(key, errorMessages.validationMessages[id][key]);
                     errorMessages.AddCompoundErrorMessage(errorMessages.validationMessages[id][key], id);
-                    console.log(id);
                     errorMessages.UpdateCompoundErrors(id);
                     $("#" + key).focus();
                 }
