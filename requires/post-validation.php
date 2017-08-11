@@ -1,6 +1,4 @@
 <?php
-
-
 $vendorValidationMessage = array(
     "V_VendorNo" => "Vendor number must be numeric only and 4 digits in length",
     "VendorName" => "Vendor name must contain at least one character",
@@ -54,7 +52,8 @@ $vendorQueryDataValidation = array(
     "Q_Description" => "/[a-zA-Z0-9]+/",
 );
 /*
-* Helper function for ValidatePost, that returns true if the value is the specified data type.
+* Helper function for ValidatePost, that returns true if the value passes preg_match
+* otherwise returns false.
 */
 function ValidateRegex($value, $regex)
 {
@@ -68,6 +67,10 @@ function ValidateRegex($value, $regex)
 * Validates a POST value with name $postName, and adds an error message to 
 * the $errors array if it is empty and returns null.  
 * Otherwise it will return the POST value.
+* <param>$tableDataValidation</param> is an associative array containing the $postName as the key and a regular expression as the value
+* <param>$tableValidationMessage</param> is an associative array containing the $postName as the key and an error message as the value
+* <optional>$allowNull</optional> True specifies that the field can be empty, false indicates it is a required field
+* <optional>$customMessage</optional> override the error message from $tableValidationMessage with your own custom message
 */
 function ValidatePost($postName, $displayName, $tableDataValidation, $tableValidationMessage, $allowNull = false, $customMessage = "")
 {
@@ -94,9 +97,11 @@ function ValidatePost($postName, $displayName, $tableDataValidation, $tableValid
 /*
 * Validates a POST value with name $postName, and adds an error message to 
 * the $errors array if it is empty and returns null. 
-* Also validates the post by checking against a regular expression
-* and a custom predicate function passed as $predicate parameter 
 * Otherwise it will return the POST value.
+* <param>$tableDataValidation</param> is an associative array containing the $postName as the key and a regular expression as the value
+* <param>$tableValidationMessage</param> is an associative array containing the $postName as the key and an error message as the value
+* <param>$predicate</param>a delegate function that returns a boolean value, allows custom logic to be inserted
+* <param>$customMessage</param> override the error message from $tableValidationMessage if the predicate is true
 */
 function ValidatePostByPredicate($postName, $displayName, $tableDataValidation, $tableValidationMessage, $predicate, $customMessage)
 {
@@ -116,7 +121,11 @@ function ValidatePostByPredicate($postName, $displayName, $tableDataValidation, 
     }
 }
 
-
+/*
+* Duplicate vendor predicate that returns true if the $postValue matches any of the
+* vendor numbers in the $vendorQuery, otherwise returns false
+* This function is used by ValidatePostByPredicate
+*/
 function DuplicateVendorPredicate($postValue)
 {
     global $vendorsQuery;
